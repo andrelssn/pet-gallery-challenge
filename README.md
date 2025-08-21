@@ -1,26 +1,38 @@
-# Treinamento e Estudo (Next.js)
-Neste repositório estarei registrando meu treinamento e aulas com o framework Next.js.
+# Pet Gallery
+Projeto de galeria de pets, solicitada pela Rede OK.
 
-### O que é o Next?
-É um framework baseado em react, atualmente fullstack, com diversos funcionamentos embutidos dentro do sistema como por exemplo o router
+*Neste projeto você poderá conferir todas as raças de gatos conhecidas, podendo consultar detalhes, curiosidades e muito mais.*
 
-### Indice
-- Criação de projetos
+## Como rodar o projeto
 
-- Roteamento e navegação de páginas
+ - Faça um Git Clone deste repositório onde desejar em seu computador;
+ - Abra a pasta do projeto na IDE de preferência, logo após isso, execute `npm install` no terminal para instalar as dependencias necessárias;
+ - Após instalado as dependencias, rode o comando `npm run dev` para iniciar a aplicação em sua rede local (localhost);
+ - Enjoy!
 
-- Metadata (SEO) - Define titulo e description da página ou view atual por meio do metadata, exemplo utilizado no page.tsx home, também define visualização em redes sociais, google, etc.
+## Tecnologias e Libs Utilizadas
 
-- Server x Client Component - Hooks funcionam somente no client component, server component pré renderiza o conteúdo, passando pelo server primeiro.
+ - Next.js v15 (com App Router)
+ - TypeScript
+ - Tailwind CSS
+ - Axios (Integração de API)
+ - Jest (Testes)
+ - Material UI (Interface)
+ - API (https://thecatapi.com/)
 
-- Rotas Dinâmicas
+## Informações úteis
 
-- Actions
+O projeto conta com diversos detalhes sendo os principais:
+ - Tabela de raças na rota inicial;
+ - Página de detalhes da raça selecionada;
+ - Paginação;
+ - Tratamento de erros;
+ - Loading para as páginas;
+ - Page Not Found;
+ - Responsividade para mobile e desktop;
+ - Favoritar pets;
 
-- Revalidate, Cache
+## Rotas
 
-- Cache Fetch
-
-- Middleware
-
-- Route Handlers
+`{url}/`: Página Principal <br/>
+`{url}/pet/:id` Página de detalhes do pet
