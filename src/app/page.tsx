@@ -6,10 +6,10 @@ import Table from './components/table';
 
 export const metadata: Metadata = {
     title: 'Pet Gallery - Home',
-    description: "Pet gallery, here we show all the dogs and cats breeds",
+    description: "Pet Gallery: Explore a variety of cat breeds and discover their unique personalities.",
     openGraph: {
         title: 'Pet Gallery',
-        description: "Pet gallery, here we show all the dogs and cats breeds",
+        description: "Pet Gallery: Explore a variety of cat breeds and discover their unique personalities.",
     },
     robots: {
         index: true,
