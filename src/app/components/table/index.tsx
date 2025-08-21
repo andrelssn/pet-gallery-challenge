@@ -80,8 +80,6 @@ export default function Table() {
         setReload(reload + 1);
     };
 
-    console.log(favorites);
-
     return (
         <div className="flex flex-col justify-self-center mt-6 mb-10 w-[95%]">
             <div className="flex flex-col justify-center rounded-xl mb-5 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
