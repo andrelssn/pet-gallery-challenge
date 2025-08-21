@@ -3,8 +3,7 @@
 // Dependences
 import React from 'react';
 import { Button, CircularProgress, Fade, Rating, Typography } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import Link from 'next/link';
 
 // Icons
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -18,7 +17,6 @@ export default function PetDetails({params
     params: Promise<{ id: string }>
 }) {
     const { id } = React.use(params);
-    const router = useRouter();
 
     const [apiDataCat, setApiDataCat] = React.useState<any>(null)
     const [apiImageCat, setApiImageCat] = React.useState<any>(null)
@@ -30,9 +28,11 @@ export default function PetDetails({params
 
     if (notFound) return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
-            <Button variant="contained" sx={{ mb: 1 }} onClick={() => router.back()}>
-                <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-            </Button>
+            <Link href={"/"}>
+                <Button variant="contained" sx={{ mb: 1 }}>
+                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                </Button>
+            </Link>
 
             <div className="flex relative w-[100%] min-h-150 justify-center border border-neutral-300 rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
                 <Typography m={"auto"} fontWeight={"bold"} color="#4b4b4bff">
@@ -44,9 +44,11 @@ export default function PetDetails({params
 
     if (!apiDataCat || !apiImageCat) return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
-            <Button variant="contained" sx={{ mb: 1 }} onClick={() => router.back()}>
-                <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-            </Button>
+            <Link href={"/"}>
+                <Button variant="contained" sx={{ mb: 1 }}>
+                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                </Button>
+            </Link>
 
             <div className="flex relative w-[100%] min-h-150 justify-center border border-neutral-300 rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
                 <CircularProgress sx={{ margin: "auto" }}/>
@@ -56,9 +58,11 @@ export default function PetDetails({params
 
     if (apiDataCat === "error") return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
-            <Button variant="contained" sx={{ mb: 1 }} onClick={() => router.back()}>
-                <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-            </Button>
+            <Link href={"/"}>
+                <Button variant="contained" sx={{ mb: 1 }}>
+                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                </Button>
+            </Link>
 
             <div className="flex relative w-[100%] min-h-150 justify-center border border-neutral-300 rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
                 <Typography m={"auto"} fontWeight={"bold"} color="#4b4b4bff">
@@ -70,9 +74,11 @@ export default function PetDetails({params
 
     return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
-            <Button variant="contained" sx={{ mb: 1 }} onClick={() => router.back()}>
-                <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-            </Button>
+            <Link href={"/"}>
+                <Button variant="contained" sx={{ mb: 1 }}>
+                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                </Button>
+            </Link>
 
             <Fade in={true}>
                 <div className="relative flex flex-col md:flex-row w-full min-h-150 justify-self-center border border-neutral-300 rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">

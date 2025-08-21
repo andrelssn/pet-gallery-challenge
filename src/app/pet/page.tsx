@@ -4,7 +4,6 @@ import { Button, Typography } from '@mui/material';
 // Icons
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-
 export default function PetDetails() {
     return (
         <div>
