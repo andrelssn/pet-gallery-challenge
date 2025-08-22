@@ -16,6 +16,7 @@ Acesse o projeto online: [Pet Gallery](https://pet-gallery-challenge.vercel.app)
 - Listagem de raças de gatos em uma tabela dinâmica.
 - Página de detalhes para cada raça com informações enriquecidas.
 - Paginação para melhor navegação.
+- Sistema de busca por nome.
 - Indicadores de carregamento (loading) e tratamento de erros para experiência mais fluida.
 - Página personalizada para rotas não encontradas (*404 Not Found*).
 - Responsivo para visão em dispositivos móveis e desktop.
