@@ -18,18 +18,57 @@ export default function PetDetails({params
 }) {
     const { id } = React.use(params);
 
-    const [apiDataCat, setApiDataCat] = React.useState<any>(null)
+    const [favorites, setFavorites]     = React.useState<string[]>([]);
+    const [apiDataCat, setApiDataCat]   = React.useState<any>(null)
     const [apiImageCat, setApiImageCat] = React.useState<any>(null)
     const [notFound, setNotFound]       = React.useState<boolean>(false);
 
     React.useEffect(() => {
         callApiDetails({id, setApiDataCat, setApiImageCat, setNotFound });
+        getLocalStorage();
     }, []);
+
+    const getLocalStorage = () => {
+        const local = localStorage.getItem("item");
+
+        if (local) {
+            setFavorites(JSON.parse(local));
+        }
+    };
+
+    const handleSetFavorite = (id: string) => {
+        const stored = localStorage.getItem("item");
+        const favorites: string[] = stored ? JSON.parse(stored) : [];
+
+        if (!favorites.includes(id)) {
+            favorites.push(id);
+        }
+
+        localStorage.setItem("item", JSON.stringify(favorites));
+        getLocalStorage();
+    }
+
+    const handleRemoveFavorite = (id: string) => {
+        const stored = localStorage.getItem("item");
+
+        let favorites: string[] = [];
+
+            try {
+                favorites = stored ? JSON.parse(stored) : [];
+            } catch (err) {
+                favorites = [];
+            }
+
+        const updatedFavorites = favorites.filter(favId => favId !== id);
+
+        localStorage.setItem("item", JSON.stringify(updatedFavorites));
+        getLocalStorage();
+    };
 
     if (notFound) return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
             <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1 }}>
+                <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
                 </Button>
             </Link>
@@ -45,7 +84,7 @@ export default function PetDetails({params
     if (!apiDataCat || !apiImageCat) return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
             <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1 }}>
+                <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
                 </Button>
             </Link>
@@ -59,7 +98,7 @@ export default function PetDetails({params
     if (apiDataCat === "error") return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
             <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1 }}>
+                <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
                 </Button>
             </Link>
@@ -75,14 +114,14 @@ export default function PetDetails({params
     return (
         <div className="justify-self-center mt-6 mb-10 w-[95%]">
             <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1 }}>
+                <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
                 </Button>
             </Link>
 
             <Fade in={true}>
                 <div className="relative flex flex-col md:flex-row w-full min-h-150 justify-self-center border border-neutral-300 rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
-                    <div className="bg-blue-500">
+                    <div className='blue-bg'>
                         <div className="w-fit justify-self-center">
                             <img
                                 alt={apiDataCat.data.name}
@@ -100,7 +139,20 @@ export default function PetDetails({params
                     </div>
 
                     <div className="ml-3 mr-3 mt-5 mb-5">
-                        <h1 className="text-2xl font-bold text-gray-700">{apiDataCat.data.name}</h1>
+                        <div className='flex items-center'>
+                            <h1 className="text-2xl font-bold text-gray-700">{apiDataCat.data.name}</h1>
+                            <Rating
+                                max={1}
+                                value={favorites.includes(apiDataCat.data.id) ? 1 : 0}
+                                onChange={(event) => {
+                                    favorites.includes(apiDataCat.data.id)
+                                    ? handleRemoveFavorite(apiDataCat.data.id)
+                                    : handleSetFavorite(apiDataCat.data.id)
+                                }}
+                                sx={{ fontSize: 26, ml: 1, mt: 0.5 }}
+                            />
+                        </div>
+
                         <p className="text-gray-600">{apiDataCat.data.origin} • {apiDataCat.data.lifeSpan}</p>
                         <p className="mt-4">{apiDataCat.data.description}</p>
 

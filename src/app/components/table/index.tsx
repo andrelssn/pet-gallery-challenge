@@ -3,7 +3,7 @@
 // Dependences
 import React from 'react';
 import Link from 'next/link';
-import { Box, Button, CircularProgress, Divider, Pagination, Rating, Skeleton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Collapse, Divider, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
 
 // Icons
 import PetsIcon from '@mui/icons-material/Pets';
@@ -11,11 +11,13 @@ import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import PublicIcon from '@mui/icons-material/Public';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 // Services
 import { callApi } from '../../services/api';
 
 export default function Table() {
+    // const [filter, setFilter]           = React.useState<boolean>(false);
     const [favorites, setFavorites]     = React.useState<string[]>([]);
     const [apiDataCat, setApiDataCat]   = React.useState<any>(null);
     const [page, setPage]               = React.useState<number>(1);
@@ -81,7 +83,7 @@ export default function Table() {
     };
 
     return (
-        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
             <div className="flex flex-col justify-center rounded-xl mb-5 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
                 <Typography variant="h6" color="#1976d2" fontWeight={"bold"} className="rounded-t-lg">
                     <PetsIcon sx={{ fontSize: 18 }}/> Cat List
@@ -95,7 +97,19 @@ export default function Table() {
             </div>
 
             <section>
-                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto">
+                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto pl-5 pr-5">
+                    {/* <Box sx={{ display: "flex", justifyContent: "right", mt: 1 }}>
+                        <IconButton onClick={() => setFilter(!filter)}>
+                            <FilterAltIcon/>
+                        </IconButton>
+                    </Box>
+
+                    <Collapse in={filter}>
+                        <div>
+                            test
+                        </div>
+                    </Collapse> */}
+
                     { tableLoader
                         ? <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: "20px 0px" }}>
                             <Skeleton animation="wave" sx={{ width: "100%", height: "100px" }}/>
@@ -104,8 +118,8 @@ export default function Table() {
                             <Skeleton variant="rectangular" animation="wave" sx={{ width: "100%", height: "100px", mt: 1 }}/>
                         </Box>
                         : <table className="w-full text-sm text-left rtl:text-right text-gray-500 rounded-xl">
-                            <thead className="text-xs text-gray-200 uppercase">
-                                <tr className="bg-blue-500">
+                            <thead className="text-xs text-gray-600 uppercase">
+                                <tr>
                                     <th scope="col" className="px-2 py-3">
                                         <div style={{ display: "flex", alignItems: "center" }}>
                                             <StarRateIcon sx={{ fontSize: 14, mr: 0.4 }}/>
@@ -127,7 +141,7 @@ export default function Table() {
                                             <span>Origin</span>
                                         </div>
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-right">
+                                    <th scope="col" className="px-6 py-3 text-center">
                                         Action
                                     </th>
                                 </tr>
@@ -159,8 +173,8 @@ export default function Table() {
                                                 { item.origin }
                                             </td>
 
-                                            <td className="px-6 py-4 text-right">
-                                                <Button size="small" variant="contained">
+                                            <td className="px-6 py-4 text-center">
+                                                <Button size="small" variant="contained" className='blue-bg'>
                                                     <Link href={`/pet/${item.id}`} className="flex items-center px-2 py-1 whitespace-nowrap items-center">
                                                         <RemoveRedEyeIcon sx={{ fontSize: 16, mr: 1 }}/>
                                                         <span>View More</span>
