@@ -1,7 +1,13 @@
-import { getDataCat, getDataCatDetails, getDataCatImage } from './services';
+import { getDataCat, getDataCatDetails, getDataCatImage, getDataCatSearch } from './services';
 
 type CallApi = {
     page: number;
+    setApiDataCat: React.Dispatch<React.SetStateAction<any>>;
+    setPageLoader: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type CallApiSearch = {
+    search: string;
     setApiDataCat: React.Dispatch<React.SetStateAction<any>>;
     setPageLoader: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -21,6 +27,21 @@ export const callApi = async (props: CallApi) => {
     } = props;
 
     await getDataCat(page).then(response => {
+        if(response.status === 200) {
+            setApiDataCat(response.data);
+            setPageLoader(false);
+        }
+    });
+};
+
+export const callApiSearch = async (props: CallApiSearch) => {
+    const {
+        search,
+        setApiDataCat,
+        setPageLoader
+    } = props;
+
+    await getDataCatSearch(search).then(response => {
         if(response.status === 200) {
             setApiDataCat(response.data);
             setPageLoader(false);

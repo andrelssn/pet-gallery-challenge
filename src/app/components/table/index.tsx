@@ -3,7 +3,7 @@
 // Dependences
 import React from 'react';
 import Link from 'next/link';
-import { Box, Button, CircularProgress, Collapse, Divider, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
 
 // Icons
 import PetsIcon from '@mui/icons-material/Pets';
@@ -12,18 +12,23 @@ import PublicIcon from '@mui/icons-material/Public';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 
 // Services
 import { callApi } from '../../services/api';
 
+// Components
+import Filter from '../filter';
+
 export default function Table() {
-    // const [filter, setFilter]           = React.useState<boolean>(false);
+    const [filter, setFilter]           = React.useState<boolean>(false);
     const [favorites, setFavorites]     = React.useState<string[]>([]);
     const [apiDataCat, setApiDataCat]   = React.useState<any>(null);
     const [page, setPage]               = React.useState<number>(1);
     const [pageLoader, setPageLoader]   = React.useState<boolean>(true);
     const [tableLoader, setTableLoader] = React.useState<boolean>(false);
     const [reload, setReload]           = React.useState(1);
+    const [searched, setSearched]       = React.useState<boolean>(false);
 
     React.useEffect(() => {
         if (!apiDataCat) {
@@ -37,7 +42,7 @@ export default function Table() {
     }, [reload]);
 
     if (pageLoader) return (
-        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
             <div className="flex relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
                 <CircularProgress sx={{ m: "auto" }}/>
             </div>
@@ -84,9 +89,9 @@ export default function Table() {
 
     return (
         <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
-            <div className="flex flex-col justify-center rounded-xl mb-5 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
-                <Typography variant="h6" color="#1976d2" fontWeight={"bold"} className="rounded-t-lg">
-                    <PetsIcon sx={{ fontSize: 18 }}/> Cat List
+            <div className="flex flex-col justify-center rounded-xl mb-6 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
+                <Typography fontSize={20} color="var(--theme)" fontWeight={"bold"}>
+                    <PetsIcon sx={{ mb: 0.5 }}/> Cat List
                 </Typography>
 
                 <Divider sx={{ m: "7px 0px" }}/>
@@ -97,19 +102,29 @@ export default function Table() {
             </div>
 
             <section>
-                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto pl-5 pr-5">
-                    {/* <Box sx={{ display: "flex", justifyContent: "right", mt: 1 }}>
-                        <IconButton onClick={() => setFilter(!filter)}>
-                            <FilterAltIcon/>
+                <Box className="relative w-[100%] rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto mb-3">
+                    <div className="flex w-[100%] justify-between items-center pl-5 pr-5">
+                        <Typography fontSize={16} color="var(--theme)" fontWeight={"bold"}>
+                            Filter
+                        </Typography>
+
+                        <IconButton onClick={() => setFilter(!filter)} sx={{ color: 'var(--theme)' }}>
+                            { filter ? <FilterAltOffIcon/> : <FilterAltIcon/> }
                         </IconButton>
-                    </Box>
+                    </div>
 
-                    <Collapse in={filter}>
-                        <div>
-                            test
-                        </div>
-                    </Collapse> */}
+                    <Filter
+                        filter={filter}
+                        setPage={setPage}
+                        setFilter={setFilter}
+                        setSearched={setSearched}
+                        setApiDataCat={setApiDataCat}
+                        setPageLoader={setPageLoader}
+                        setTableLoader={setTableLoader}
+                    />
+                </Box>
 
+                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto pl-5 pr-5">
                     { tableLoader
                         ? <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: "20px 0px" }}>
                             <Skeleton animation="wave" sx={{ width: "100%", height: "100px" }}/>
@@ -147,7 +162,7 @@ export default function Table() {
                                 </tr>
                             </thead>
                             <tbody>
-                                { apiDataCat.map((item: any) => {
+                                { apiDataCat?.length > 0 ? apiDataCat.map((item: any) => {
                                     return (
                                         <tr key={item.id} className="border-b border-gray-300 hover:bg-gray-200">
                                             <td key={reload} className="px-6 py-4 w-[120px]">
@@ -183,7 +198,16 @@ export default function Table() {
                                             </td>
                                         </tr>
                                     )
-                                })}
+                                })
+                                :  <tr>
+                                        <td
+                                            colSpan={999}
+                                            className="px-4 py-6 text-center bg-red-50 text-red-700 border border-red-200"
+                                        >
+                                            No Results.
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     }
@@ -191,6 +215,7 @@ export default function Table() {
 
                 <Box className="w-[340px] p-2 flex justify-self-center justify-center shadow-md/30 bg-neutral-100 rounded-xl mt-5  mb-5">
                     <Pagination
+                        disabled={ searched }
                         count={6}
                         page={page}
                         color="primary"
