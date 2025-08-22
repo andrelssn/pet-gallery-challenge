@@ -17,6 +17,23 @@ export async function getDataCat(page: number) {
     }
 }
 
+export async function getDataCatSearch(search: string) {
+    try {
+        const apiUrl = `https://api.thecatapi.com/v1/breeds/search?q=${search}`;
+
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': 'live_JpswA8YWI9tY1Plc3p4JStv8JqtVgAST4bhWuMUbHjrXu8GvfCy7bZhuZsOVLCzr',
+            },
+        });
+
+        return response;
+    } catch (error: any) {
+        return error.response;
+    }
+}
+
 export async function getDataCatDetails(id: string) {
     try {
         const apiUrl = `https://api.thecatapi.com/v1/breeds/${id}`;

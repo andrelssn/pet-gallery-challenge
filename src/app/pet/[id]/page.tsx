@@ -66,7 +66,7 @@ export default function PetDetails({params
     };
 
     if (notFound) return (
-        <div className="justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="justify-self-center mt-6 mb-10 w-[90%]">
             <Link href={"/"}>
                 <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
@@ -82,7 +82,7 @@ export default function PetDetails({params
     );
 
     if (!apiDataCat || !apiImageCat) return (
-        <div className="justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="justify-self-center mt-6 mb-10 w-[90%]">
             <Link href={"/"}>
                 <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
@@ -96,7 +96,7 @@ export default function PetDetails({params
     );
 
     if (apiDataCat === "error") return (
-        <div className="justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="justify-self-center mt-6 mb-10 w-[90%]">
             <Link href={"/"}>
                 <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
@@ -112,7 +112,7 @@ export default function PetDetails({params
     );
 
     return (
-        <div className="justify-self-center mt-6 mb-10 w-[95%]">
+        <div className="justify-self-center mt-6 mb-10 w-[90%]">
             <Link href={"/"}>
                 <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                     <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
