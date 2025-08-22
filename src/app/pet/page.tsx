@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 export default function PetDetails() {
     return (
         <div>
-            <div className="justify-self-center mt-6 mb-10 w-[95%]">
+            <div className="justify-self-center mt-6 mb-10 w-[90%]">
                 <Link href={"/"}>
                     <Button variant="contained" sx={{ mb: 1 }} className='blue-bg'>
                         <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Home
