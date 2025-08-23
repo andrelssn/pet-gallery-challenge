@@ -66,49 +66,55 @@ export default function PetDetails({params
     };
 
     if (notFound) return (
-        <div className="justify-self-center mt-6 mb-10 w-[90%]">
-            <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
-                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-                </Button>
-            </Link>
+        <Fade in={true}>
+            <div className="justify-self-center mt-6 mb-10 w-[90%]">
+                <Link href={"/"}>
+                    <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
+                        <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                    </Button>
+                </Link>
 
-            <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
-                <Typography m={"auto"} fontWeight={"bold"} color="var(--text2)">
-                    Pet not found.<br/>
-                </Typography>
+                <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
+                    <Typography m={"auto"} fontWeight={"bold"} color="var(--text2)">
+                        Pet not found.<br/>
+                    </Typography>
+                </div>
             </div>
-        </div>
+        </Fade>
     );
 
     if (!apiDataCat || !apiImageCat) return (
-        <div className="justify-self-center mt-6 mb-10 w-[90%]">
-            <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
-                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-                </Button>
-            </Link>
+        <Fade in={true}>
+            <div className="justify-self-center mt-6 mb-10 w-[90%]">
+                <Link href={"/"}>
+                    <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
+                        <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                    </Button>
+                </Link>
 
-            <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
-                <CircularProgress sx={{ margin: "auto", color: "var(--theme)" }}/>
+                <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
+                    <CircularProgress sx={{ margin: "auto", color: "var(--theme)" }}/>
+                </div>
             </div>
-        </div>
+        </Fade>
     );
 
     if (apiDataCat === "error") return (
-        <div className="justify-self-center mt-6 mb-10 w-[90%]">
-            <Link href={"/"}>
-                <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
-                    <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
-                </Button>
-            </Link>
+        <Fade in={true}>
+            <div className="justify-self-center mt-6 mb-10 w-[90%]">
+                <Link href={"/"}>
+                    <Button variant="contained" sx={{ mb: 1, color: "var(--text)" }} className='btn-style'>
+                        <ArrowBackIcon sx={{ fontSize: 16, mr: 1 }}/> Back
+                    </Button>
+                </Link>
 
-            <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
-                <Typography m={"auto"} fontWeight={"bold"} color="var(--text2)">
-                    API offline at the moment, please try again later.<br/>
-                </Typography>
+                <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
+                    <Typography m={"auto"} fontWeight={"bold"} color="var(--text2)">
+                        API offline at the moment, please try again later.<br/>
+                    </Typography>
+                </div>
             </div>
-        </div>
+        </Fade>
     );
 
     return (
@@ -120,42 +126,41 @@ export default function PetDetails({params
             </Link>
 
             <Fade in={true}>
-                <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
-                    <div className='theme-bg'>
-                        <div className="w-fit justify-self-center">
+                <div className="flex flex-col lg:flex-row w-full min-h-150 border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-hidden">
+                    <div className="flex flex-col items-center p-4 lg:w-1/2">
+                        <div className="w-full flex justify-center">
                             <img
                                 alt={apiDataCat.data.name}
                                 src={apiImageCat.image.url}
                                 width={900}
                                 height={500}
-                                className="object-cover"
+                                className="object-cover rounded-lg"
                             />
                         </div>
 
-                        <Button href={apiDataCat.data.wikipedia_url} sx={{ display: "flex", justifySelf: "center", color: "var(--text)" }}>
+                        <Button
+                            href={apiDataCat.data.wikipedia_url}
+                            sx={{ display: "flex", justifySelf: "center", color: "var(--text3)", marginTop: "1rem" }}
+                        >
                             Find out more
-                            <LaunchIcon sx={{ ml: 1, fontSize: 18 }}/>
+                            <LaunchIcon sx={{ ml: 1, fontSize: 18 }} />
                         </Button>
                     </div>
 
-                    <div className="ml-3 mr-3 mt-5 mb-5">
-                        <div className='flex items-center'>
+                    <div className="p-5 lg:w-1/2">
+                        <div className="flex items-center flex-wrap gap-2">
                             <h1 className="text-2xl font-bold text-[var(--text3)]">{apiDataCat.data.name}</h1>
                             <Rating
                                 max={1}
                                 value={favorites.includes(apiDataCat.data.id) ? 1 : 0}
-                                onChange={(event) => {
-                                    favorites.includes(apiDataCat.data.id)
+                                onChange={() => {
+                                favorites.includes(apiDataCat.data.id)
                                     ? handleRemoveFavorite(apiDataCat.data.id)
                                     : handleSetFavorite(apiDataCat.data.id)
                                 }}
                                 sx={{
                                     fontSize: 26,
-                                    ml: 1,
-                                    mt: 0.5,
-                                    "& .MuiRating-iconEmpty": {
-                                        color: "var(--text2)"
-                                    },
+                                    "& .MuiRating-iconEmpty": { color: "var(--text2)" },
                                 }}
                             />
                         </div>
@@ -164,19 +169,12 @@ export default function PetDetails({params
                         <p className="mt-4 text-[var(--text3)]">{apiDataCat.data.description}</p>
 
                         <div className="mt-4 text-sm text-[var(--text2)] space-y-1">
-                            <p>
-                                <span className="font-bold">Life span:</span> {apiDataCat.data.life_span} years
-                            </p>
-                            <p>
-                                <span className="font-bold">Weight:</span> {apiDataCat.data.weight.metric} kg ({apiDataCat.data.weight.imperial} lbs)
-                            </p>
+                            <p><span className="font-bold">Life span:</span> {apiDataCat.data.life_span} years</p>
+                            <p><span className="font-bold">Weight:</span> {apiDataCat.data.weight.metric} kg ({apiDataCat.data.weight.imperial} lbs)</p>
                         </div>
 
                         <div className="mt-6">
-                            <h2 className="text-lg font-semibold text-[var(--text3)]">
-                                Temperament
-                            </h2>
-
+                            <h2 className="text-lg font-semibold text-[var(--text3)]">Temperament</h2>
                             <div className="flex flex-wrap gap-2 mt-2">
                                 <span className="px-3 py-1 bg-[var(--theme)] text-[var(--text)] rounded-full text-sm font-bold">
                                     {apiDataCat.data.temperament}
@@ -187,7 +185,7 @@ export default function PetDetails({params
                         <div className="mt-6">
                             <h2 className="text-lg font-semibold mb-4 text-[var(--text3)]">Traits</h2>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                                 <div className="flex items-center gap-3">
                                     <span className="w-32 text-sm text-[var(--text2)]">Adaptability</span>
                                     <Rating value={apiDataCat.data.adaptability} readOnly />

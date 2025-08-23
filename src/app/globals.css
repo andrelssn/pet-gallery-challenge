@@ -1,32 +1,34 @@
 @import "tailwindcss";
 
 :root {
-    --background: #121629;
-    --border:     #000000;
-    --panel:      #232946;
-    --theme:      #eebbc3;
-    --text:       #232946;
-    --text2:       #b8c1ec;
-    --text3:         #fffffe;
+    --background: #0f172a;
+    --panel: #1e293b;
+    --border: #334155;
+    --theme: #eebbc3;
+    --text: #0f172a;
+    --text2: #94a3b8;
+    --text3: #f8fafc;
 }
 
 * {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif  !important;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 body {
-    background: var(--background);
+  background: radial-gradient(circle at top, #1a1b26 0%, #0f1117 100%);
 }
 
 .theme-bg {
-    background: linear-gradient(0.25turn, #e699a5, #f5acb7, #e699a5);
+    background: linear-gradient(135deg, var(--theme), #cf8d98);
 }
 
 .btn-style {
     color: var(--text) !important;
     background-color: var(--theme) !important;
+    transition: background-color 0.2s ease-in-out, transform 0.15s ease;
 }
 
 .btn-style:hover {
-    background-color: #e699a5 !important;
+    background-color: #cf8d98 !important;
+    transform: translateY(-1px);
 }

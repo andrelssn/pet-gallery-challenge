@@ -54,7 +54,7 @@ export default function Filter(props: FilterProps) {
 
     return (
         <Collapse in={filter}>
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-center bg-[var(--panel)] border-t border-[var(--theme)] p-5">
+            <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-[var(--panel)] p-5">
                 <TextField
                     label="Search by Breed"
                     variant="outlined"
@@ -64,39 +64,42 @@ export default function Filter(props: FilterProps) {
                     sx={{
                         "& .MuiInputBase-input": {
                             color: "var(--text3)",
+                            padding: "10px 12px",
                         },
                         "& .MuiInputLabel-root": {
                             color: "var(--text2) !important",
                         },
                         "& .MuiOutlinedInput-root": {
+                            borderRadius: "12px",
+                            backgroundColor: "var(--background)",
                             "& fieldset": {
                                 borderColor: "var(--text2)",
                             },
                             "&:hover fieldset": {
-                                borderColor: "var(--text2)",
+                                borderColor: "var(--theme)",
                             },
                             "&.Mui-focused fieldset": {
-                                borderColor: "var(--text3)",
+                                borderColor: "var(--theme)",
+                                boxShadow: "0 0 0 3px rgba(238,187,195,0.3)",
                             },
                         },
                     }}
-                    className="w-full md:w-1/3"
+                    className="w-full md:w-1/3 transition-all duration-300"
                 />
 
                 <div className="flex gap-2">
                     <Button
                         variant="contained"
                         onClick={handleApply}
-                        className="theme-bg"
-                        sx={{ color: "var(--text)" }}
-                        >
+                        className="bg-[var(--theme)] hover:bg-[var(--theme)]/90 text-[var(--background)] shadow-md px-5 py-2 rounded-xl transition-all duration-300"
+                    >
                         Apply
                     </Button>
 
                     <Button
                         variant="outlined"
-                        color="primary"
                         onClick={handleClear}
+                        className="border-[var(--theme)] text-[var(--theme)] hover:bg-[var(--theme)]/10 rounded-xl px-5 py-2 transition-all duration-300"
                     >
                         Clear
                     </Button>
