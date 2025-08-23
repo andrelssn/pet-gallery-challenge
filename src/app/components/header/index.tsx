@@ -1,6 +1,8 @@
 import Link from 'next/link';
 
-import PetsIcon from '@mui/icons-material/Pets';
+import logo from '../../images/pet.png';
+
+import Image from 'next/image';
 
 export function Header() {
     return (
@@ -12,18 +14,17 @@ export function Header() {
                 height: 70,
                 alignItems: "center",
                 padding: 15,
-                backgroundColor: "#ffffff",
-                borderBottom: "1px solid var(--theme)"
+                backgroundColor: "var(--panel)",
             }}
         >
             <h1 className="font-bold text-[20px]">
                 <Link href={'/'} style={{ marginRight: 10, fontWeight: "bold", display: "flex", color: "var(--theme)", gap: 5 }}>
-                    <PetsIcon sx={{ fontSize: 26, mt: 0.2 }}/>
+                    <Image alt='pet-gallery' src={logo} width={30}/>
                     <span>Pet Gallery</span>
                 </Link>
             </h1>
 
-            <div className='text-gray-600 text-[12px]'>
+            <div className='text-[var(--text2)] text-[12px]'>
                 Pet Gallery © 2025 | All rights reserved
             </div>
         </header>
