@@ -124,17 +124,13 @@ export default function Desktop(props: DesktopProps) {
 
                                 <td className="px-6 py-4 text-center">
                                     <Button
-                                        size="small"
+                                        size="medium"
                                         variant="contained"
-                                        className="btn-style shadow-md hover:shadow-lg transition-all"
+                                        className="btn-style shadow-md hover:shadow-lg transition-all flex items-center gap-1 px-2 py-1 text-[var(--text)]"
+                                        href={`/pet/${item.id}`}
                                     >
-                                        <Link
-                                            href={`/pet/${item.id}`}
-                                            className="flex items-center gap-1 px-2 py-1 text-[var(--text)]"
-                                        >
-                                            <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
-                                            <span>View More</span>
-                                        </Link>
+                                        <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
+                                        <span>View More</span>
                                     </Button>
                                 </td>
                             </tr>
