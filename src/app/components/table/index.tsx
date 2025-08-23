@@ -22,8 +22,10 @@ import { callApi } from '../../services/api';
 
 // Components
 import Filter from '../filter';
+import { checkMobile } from '../checkMobile';
 
 export default function Table() {
+    const isMobile                      = checkMobile();
     const [filter, setFilter]           = React.useState<boolean>(false);
     const [favorites, setFavorites]     = React.useState<string[]>([]);
     const [apiDataCat, setApiDataCat]   = React.useState<any>(null);
