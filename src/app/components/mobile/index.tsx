@@ -94,15 +94,12 @@ export default function Mobile(props: MobileProps) {
                             <Button
                                 size="small"
                                 variant="contained"
-                                className="btn-style w-full"
+                                component={Link}
+                                href={`/pet/${item.id}`}
+                                className="btn-style w-full flex items-center justify-center gap-2 text-[var(--text)]"
                             >
-                                <Link
-                                    href={`/pet/${item.id}`}
-                                    className="flex items-center justify-center gap-2 text-[var(--text)]"
-                                >
-                                    <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
-                                    <span>View More</span>
-                                </Link>
+                                <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
+                                <span>View More</span>
                             </Button>
                         </div>
                     )))
