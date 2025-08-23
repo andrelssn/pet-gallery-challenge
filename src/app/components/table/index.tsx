@@ -3,10 +3,13 @@
 // Dependences
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Box, Button, CircularProgress, Divider, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
 
+// Logo
+import logo from '../../images/pet.png';
+
 // Icons
-import PetsIcon from '@mui/icons-material/Pets';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import PublicIcon from '@mui/icons-material/Public';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
@@ -43,8 +46,8 @@ export default function Table() {
 
     if (pageLoader) return (
         <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
-            <div className="flex relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
-                <CircularProgress sx={{ m: "auto" }}/>
+            <div className="flex relative w-[100%] min-h-150 justify-center border border-[var(--border)] rounded-xl shadow-md/30 bg-[var(--panel)] overflow-auto">
+                <CircularProgress sx={{ m: "auto", color: "var(--theme)" }}/>
             </div>
         </div>
     );
@@ -89,20 +92,21 @@ export default function Table() {
 
     return (
         <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
-            <div className="flex flex-col justify-center rounded-xl mb-6 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
-                <Typography fontSize={20} color="var(--theme)" fontWeight={"bold"}>
-                    <PetsIcon sx={{ mb: 0.5 }}/> Cat List
+            <div className="flex flex-col justify-center rounded-xl mb-6 shadow-md/30 bg-[var(--panel)] border border-[var(--border)] pl-4 pr-4 pt-2 pb-2">
+                <Typography fontSize={20} color="var(--theme)" fontWeight={"bold"} display={"flex"} gap={1}>
+                    <Image alt='pet-gallery' src={logo} width={30}/>
+                    Cat List
                 </Typography>
 
-                <Divider sx={{ m: "7px 0px" }}/>
+                <Divider sx={{ m: "7px 0px", bgcolor: "var(--theme)" }}/>
 
-                <Typography color="#666666ff" fontSize={14}>
+                <Typography color="var(--text2)" fontSize={14}>
                     Here you can check out all the breeds of cats, to view more details click in the 'View More' button on the list.
                 </Typography>
             </div>
 
             <section>
-                <Box className="relative w-[100%] rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto mb-3">
+                <Box className="relative w-[100%] rounded-xl shadow-md/30 bg-[var(--panel)] border border-[var(--border)] overflow-auto mb-3">
                     <div className="flex w-[100%] justify-between items-center pl-5 pr-5">
                         <Typography fontSize={16} color="var(--theme)" fontWeight={"bold"}>
                             Filter
@@ -124,7 +128,7 @@ export default function Table() {
                     />
                 </Box>
 
-                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto pl-5 pr-5">
+                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-[var(--panel)] border border-[var(--border)] overflow-auto pl-5 pr-5 pb-2">
                     { tableLoader
                         ? <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: "20px 0px" }}>
                             <Skeleton animation="wave" sx={{ width: "100%", height: "100px" }}/>
@@ -133,7 +137,7 @@ export default function Table() {
                             <Skeleton variant="rectangular" animation="wave" sx={{ width: "100%", height: "100px", mt: 1 }}/>
                         </Box>
                         : <table className="w-full text-sm text-left rtl:text-right text-gray-500 rounded-xl">
-                            <thead className="text-xs text-gray-600 uppercase">
+                            <thead className="text-xs text-[var(--text2)] uppercase">
                                 <tr>
                                     <th scope="col" className="px-2 py-3">
                                         <div style={{ display: "flex", alignItems: "center" }}>
@@ -164,7 +168,7 @@ export default function Table() {
                             <tbody>
                                 { apiDataCat?.length > 0 ? apiDataCat.map((item: any) => {
                                     return (
-                                        <tr key={item.id} className="border-b border-gray-300 hover:bg-gray-200">
+                                        <tr key={item.id} className="border-b border-gray-600 hover:bg-[var(--background)]">
                                             <td key={reload} className="px-6 py-4 w-[120px]">
                                                 <Rating
                                                     max={1}
@@ -174,23 +178,28 @@ export default function Table() {
                                                         ? handleRemoveFavorite(item.id)
                                                         : handleSetFavorite(item.id)
                                                     }}
-                                                    sx={{ fontSize: 30 }}
+                                                    sx={{
+                                                        fontSize: 24,
+                                                        "& .MuiRating-iconEmpty": {
+                                                            color: "var(--text2)"
+                                                        },
+                                                    }}
                                                 />
                                             </td>
 
                                             <td className="px-6 py-4">
                                                 { item.id }
                                             </td>
-                                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            <th scope="row" className="px-6 py-4 font-medium text-[var(--text3)] whitespace-nowrap">
                                                 { item.name }
                                             </th>
-                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                            <td className="px-6 py-4 font-medium text-[var(--text3)] whitespace-nowrap">
                                                 { item.origin }
                                             </td>
 
                                             <td className="px-6 py-4 text-center">
-                                                <Button size="small" variant="contained" className='blue-bg'>
-                                                    <Link href={`/pet/${item.id}`} className="flex items-center px-2 py-1 whitespace-nowrap items-center">
+                                                <Button size="small" variant="contained" className='btn-style'>
+                                                    <Link href={`/pet/${item.id}`} className="flex items-center px-2 py-1 whitespace-nowrap items-center text-[var(--text)]">
                                                         <RemoveRedEyeIcon sx={{ fontSize: 16, mr: 1 }}/>
                                                         <span>View More</span>
                                                     </Link>
@@ -202,7 +211,7 @@ export default function Table() {
                                 :  <tr>
                                         <td
                                             colSpan={999}
-                                            className="px-4 py-6 text-center bg-red-50 text-red-700 border border-red-200"
+                                            className="px-4 py-6 text-center text-[var(--text2)]"
                                         >
                                             No Results.
                                         </td>
@@ -213,13 +222,25 @@ export default function Table() {
                     }
                 </div>
 
-                <Box className="w-[340px] p-2 flex justify-self-center justify-center shadow-md/30 bg-neutral-100 rounded-xl mt-5  mb-5">
+                <Box className="w-[340px] p-2 flex justify-self-center justify-center shadow-md/30 bg-[var(--panel)] rounded-xl mt-5 mb-5">
                     <Pagination
                         disabled={ searched }
                         count={6}
                         page={page}
-                        color="primary"
                         onChange={handleChangePage}
+                        sx={{
+                            "& .MuiPaginationItem-root": {
+                                color: "white",
+                            },
+                            "& .Mui-selected": {
+                                backgroundColor: "var(--theme) !important",
+                                color: "var(--text)",
+                                borderRadius: "8px",
+                            },
+                            "& .MuiPaginationItem-root:hover": {
+                                backgroundColor: "rgba(255,255,255,0.2)",
+                            },
+                        }}
                     />
                 </Box>
             </section>
