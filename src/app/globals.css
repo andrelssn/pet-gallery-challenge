@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  	font-family: 'nunito';
+  	src: local('nunito'), url('../app/fonts/Nunito-Regular.ttf') format('truetype');
+}
+
+* {
+	font-family: 'nunito', sans-serif !important;
+}
+
 :root {
     --background: #0f172a;
     --panel: #1e293b;
@@ -10,12 +19,8 @@
     --text3: #f8fafc;
 }
 
-* {
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-}
-
 body {
-  background: radial-gradient(circle at top, #1a1b26 0%, #0f1117 100%);
+  background: radial-gradient(circle at top, #11121a 0%, #090a0e 100%);
 }
 
 .theme-bg {
@@ -24,11 +29,12 @@ body {
 
 .btn-style {
     color: var(--text) !important;
+    font-weight: bold !important;
     background-color: var(--theme) !important;
     transition: background-color 0.2s ease-in-out, transform 0.15s ease;
 }
 
 .btn-style:hover {
-    background-color: #cf8d98 !important;
+    background-color: #ffdce1 !important;
     transform: translateY(-1px);
 }
