@@ -54,29 +54,48 @@ export default function Filter(props: FilterProps) {
 
     return (
         <Collapse in={filter}>
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-center bg-neutral-100 border-t border-neutral-300 p-5">
+            <div className="flex flex-col md:flex-row gap-4 items-center justify-center bg-[var(--panel)] border-t border-[var(--theme)] p-5">
                 <TextField
                     label="Search by Breed"
                     variant="outlined"
                     size="small"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
+                    sx={{
+                        "& .MuiInputBase-input": {
+                            color: "var(--text3)",
+                        },
+                        "& .MuiInputLabel-root": {
+                            color: "var(--text2) !important",
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                                borderColor: "var(--text2)",
+                            },
+                            "&:hover fieldset": {
+                                borderColor: "var(--text2)",
+                            },
+                            "&.Mui-focused fieldset": {
+                                borderColor: "var(--text3)",
+                            },
+                        },
+                    }}
                     className="w-full md:w-1/3"
                 />
 
                 <div className="flex gap-2">
                     <Button
                         variant="contained"
-                        color="primary"
                         onClick={handleApply}
-                        className="blue-bg"
-                    >
+                        className="theme-bg"
+                        sx={{ color: "var(--text)" }}
+                        >
                         Apply
                     </Button>
 
                     <Button
                         variant="outlined"
-                        color="secondary"
+                        color="primary"
                         onClick={handleClear}
                     >
                         Clear

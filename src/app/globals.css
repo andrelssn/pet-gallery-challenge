@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
 :root {
-    --theme: #1976d2;
+    --background: #121629;
+    --border:     #000000;
+    --panel:      #232946;
+    --theme:      #eebbc3;
+    --text:       #232946;
+    --text2:       #b8c1ec;
+    --text3:         #fffffe;
 }
 
 * {
@@ -9,9 +15,18 @@
 }
 
 body {
-    background: linear-gradient(0.25turn, #cee6ff, #eeeeee, #cee6ff);
+    background: var(--background);
 }
 
-.blue-bg {
-    background: linear-gradient(0.25turn, #3c55c5, #4b82d4, #1976d2);
+.theme-bg {
+    background: linear-gradient(0.25turn, #e699a5, #f5acb7, #e699a5);
+}
+
+.btn-style {
+    color: var(--text) !important;
+    background-color: var(--theme) !important;
+}
+
+.btn-style:hover {
+    background-color: #e699a5 !important;
 }
