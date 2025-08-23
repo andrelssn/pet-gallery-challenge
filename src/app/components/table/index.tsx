@@ -65,10 +65,10 @@ export default function Table() {
         <Fade in={true}>
             <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%] max-w-5xl">
                 <div className="flex flex-col justify-center rounded-2xl mb-6 shadow-md bg-[var(--panel)] border border-[var(--border)] p-5 transition hover:shadow-lg">
-                    <div className="items-center gap-2 text-[var(--theme)] text-xl">
-                        <Typography textAlign={"center"} fontWeight={"bold"} fontSize={24}>
+                    <div className="items-center gap-2 text-xl">
+                        <Typography textAlign={"center"} fontWeight={"bold"} fontSize={28}>
                             <Image alt="pet-gallery" src={logo} width={50} style={{ margin: "auto" }}/>
-                            <span>Cat List</span>
+                            <span className='text-glow'>Explore the World of Cats</span>
                         </Typography>
                     </div>
 

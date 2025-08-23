@@ -2,7 +2,7 @@
 
 @font-face {
   	font-family: 'nunito';
-  	src: local('nunito'), url('../app/fonts/Nunito-Regular.ttf') format('truetype');
+  	src: local('nunito'), url('../app/fonts/Nunito-Bold.ttf') format('truetype');
 }
 
 * {
@@ -20,7 +20,36 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #11121a 0%, #090a0e 100%);
+    min-height: 100%;
+    background: radial-gradient(circle at top left, #0a0a12 0%, #11121a 60%, #0f0f19 100%);
+    position: static;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(238, 187, 195, 0.35), rgba(170, 140, 255, 0.25), rgba(0, 195, 255, 0.2));
+    filter: blur(150px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    right: -10%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(255, 200, 220, 0.25), rgba(0, 195, 255, 0.1), rgba(238, 187, 195, 0.15));
+    filter: blur(120px);
+    z-index: 0;
+    pointer-events: none;
 }
 
 .theme-bg {
@@ -30,11 +59,18 @@ body {
 .btn-style {
     color: var(--text) !important;
     font-weight: bold !important;
-    background-color: var(--theme) !important;
+    background: linear-gradient(135deg, #e4a5ae, #ffdce1, #e4a5ae);
     transition: background-color 0.2s ease-in-out, transform 0.15s ease;
 }
 
 .btn-style:hover {
-    background-color: #ffdce1 !important;
+    background: linear-gradient(135deg, #eebbc3, #ffdce1, #eebbc3);
     transform: translateY(-1px);
+}
+
+.text-glow {
+    background: linear-gradient(135deg, #e4a5ae, #ffdce1, #e4a5ae);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }
