@@ -3,13 +3,13 @@
 // Dependences
 import React from 'react';
 import Image from 'next/image';
-import { Box, Button, CircularProgress, Divider, Fade, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
+import { Button, CircularProgress, Pagination, Typography } from '@mui/material';
 
 // Logo
 import logo from '../../images/pet.png';
 
 // Icons
-
+import StarIcon from '@mui/icons-material/Star';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 
@@ -18,14 +18,16 @@ import { callApi } from '../../services/api';
 
 // Components
 import { checkMobile } from '../checkMobile';
+import { CatItem } from '../type/type';
 import Filter from '../filter';
 import Desktop from '../desktop';
 import Mobile from '../mobile';
+import Link from 'next/link';
 
 export default function Table() {
     const isMobile                      = checkMobile();
     const [filter, setFilter]           = React.useState<boolean>(false);
-    const [favorites, setFavorites]     = React.useState<string[]>([]);
+    const [favorites, setFavorites]     = React.useState<CatItem[]>([]);
     const [apiDataCat, setApiDataCat]   = React.useState<any>(null);
     const [page, setPage]               = React.useState<number>(1);
     const [pageLoader, setPageLoader]   = React.useState<boolean>(true);
@@ -62,28 +64,34 @@ export default function Table() {
     };
 
     return (
-        <Fade in={true}>
-            <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%] max-w-5xl">
-                <div className="flex flex-col justify-center rounded-2xl mb-6 shadow-md bg-[var(--panel)] border border-[var(--border)] p-5 transition hover:shadow-lg">
-                    <div className="items-center gap-2 text-xl">
-                        <Typography textAlign={"center"} fontWeight={"bold"} fontSize={28}>
-                            <Image alt="pet-gallery" src={logo} width={50} style={{ margin: "auto" }}/>
-                            <span className='text-glow'>Explore the World of Cats</span>
-                        </Typography>
-                    </div>
-
-                    <div className="h-[1px] bg-[var(--theme)] opacity-50 my-3" />
-
-                    <p className="text-[var(--text2)] text-sm leading-relaxed text-center">
-                        Discover all cat breeds and learn about their characteristics and curiosities.<br/>
-                        Click <span className="text-[var(--theme)] font-semibold"> "View More"</span> for complete details on each breed.
-                    </p>
+        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%] max-w-5xl">
+            <div className="flex flex-col justify-center rounded-2xl mb-6 shadow-md bg-[var(--panel)] border border-[var(--border)] p-5 transition hover:shadow-lg">
+                <div className="items-center gap-2 text-xl">
+                    <Typography textAlign={"center"} fontWeight={"bold"} fontSize={28}>
+                        <Image alt="pet-gallery" src={logo} width={50} style={{ margin: "auto" }}/>
+                        <span className='text-glow'>Explore the World of Cats</span>
+                    </Typography>
                 </div>
 
-                <section className="space-y-5">
-                    <div className="w-full rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] overflow-hidden">
-                        <div className="flex justify-between items-center px-5 py-3 bg-[var(--background)]/50 border-b border-[var(--border)]">
-                            <h2 className="text-[var(--theme)] font-bold text-base">Filter</h2>
+                <div className="h-[1px] bg-[var(--theme)] opacity-50 my-3" />
+
+                <p className="text-[var(--text2)] text-sm leading-relaxed text-center">
+                    Discover all cat breeds and learn about their characteristics and curiosities.<br/>
+                    Click <span className="text-[var(--theme)] font-semibold"> "View More"</span> for complete details on each breed.
+                </p>
+            </div>
+
+            <section className="space-y-5">
+                <div className="w-full rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] overflow-hidden">
+                    <div className="flex justify-between items-center px-5 py-3 bg-[var(--background)]/50 border-b border-[var(--border)]">
+                        <h2 className="text-[var(--theme)] font-bold text-base">Filter</h2>
+
+                        <div className='flex items-center gap-3'>
+                            <Link href='/favorites'>
+                                <Button size='small' className='favorites-btn' startIcon={<StarIcon/>}>
+                                    My Favorites
+                                </Button>
+                            </Link>
 
                             <button
                                 onClick={() => setFilter(!filter)}
@@ -96,44 +104,45 @@ export default function Table() {
                                 )}
                             </button>
                         </div>
-
-                        <div className="p-4">
-                            <Filter
-                                filter={filter}
-                                setPage={setPage}
-                                setFilter={setFilter}
-                                setSearched={setSearched}
-                                setApiDataCat={setApiDataCat}
-                                setPageLoader={setPageLoader}
-                                setTableLoader={setTableLoader}
-                            />
-                        </div>
                     </div>
 
-                    <div className="w-full min-h-150 rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] p-5">
-                        {isMobile ? (
-                            <Mobile
-                                apiDataCat={apiDataCat}
-                                reload={reload}
-                                favorites={favorites}
-                                tableLoader={tableLoader}
-                                setReload={setReload}
-                            />
-                        ) : (
-                            <Desktop
-                                apiDataCat={apiDataCat}
-                                reload={reload}
-                                favorites={favorites}
-                                tableLoader={tableLoader}
-                                setReload={setReload}
-                            />
-                        )}
+                    <div className="p-4">
+                        <Filter
+                            filter={filter}
+                            setPage={setPage}
+                            setFilter={setFilter}
+                            setSearched={setSearched}
+                            setApiDataCat={setApiDataCat}
+                            setPageLoader={setPageLoader}
+                            setTableLoader={setTableLoader}
+                        />
                     </div>
+                </div>
 
+                <div className="w-full min-h-150 rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] p-5">
+                    {isMobile ? (
+                        <Mobile
+                            apiDataCat={apiDataCat}
+                            reload={reload}
+                            favorites={favorites}
+                            tableLoader={tableLoader}
+                            setReload={setReload}
+                        />
+                    ) : (
+                        <Desktop
+                            apiDataCat={apiDataCat}
+                            reload={reload}
+                            favorites={favorites}
+                            tableLoader={tableLoader}
+                            setReload={setReload}
+                        />
+                    )}
+                </div>
+
+                {!searched && (
                     <div className="flex justify-center">
                         <div className="rounded-2xl shadow-md bg-[var(--panel)] px-4 py-2">
                             <Pagination
-                                disabled={searched}
                                 count={6}
                                 page={page}
                                 onChange={handleChangePage}
@@ -153,8 +162,8 @@ export default function Table() {
                             />
                         </div>
                     </div>
-                </section>
-            </div>
-        </Fade>
+                )}
+            </section>
+        </div>
     )
 }

@@ -3,8 +3,15 @@ import { Box, Button, Rating, Skeleton } from "@mui/material"
 
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
+type CatItem = {
+    id: string;
+    name: string;
+    origin: string;
+    [key: string]: any;
+};
+
 type MobileProps = {
-    favorites: string[];
+    favorites: CatItem[];
     reload: number;
     apiDataCat: any;
     tableLoader: boolean
@@ -20,30 +27,24 @@ export default function Mobile(props: MobileProps) {
         setReload
     } = props;
 
-    const handleSetFavorite = (id: string) => {
+    const handleSetFavorite = (item: any) => {
         const stored = localStorage.getItem("item");
-        const favorites: string[] = stored ? JSON.parse(stored) : [];
+        const favorites: any[] = stored ? JSON.parse(stored) : [];
 
-        if (!favorites.includes(id)) {
-            favorites.push(id);
+        const exists = favorites.some(fav => fav.id === item.id);
+        if (!exists) {
+            favorites.push(item);
         }
 
         localStorage.setItem("item", JSON.stringify(favorites));
         setReload(reload + 1);
-    }
+    };
 
     const handleRemoveFavorite = (id: string) => {
         const stored = localStorage.getItem("item");
+        let favorites: any[] = stored ? JSON.parse(stored) : [];
 
-        let favorites: string[] = [];
-
-            try {
-                favorites = stored ? JSON.parse(stored) : [];
-            } catch (err) {
-                favorites = [];
-            }
-
-        const updatedFavorites = favorites.filter(favId => favId !== id);
+        const updatedFavorites = favorites.filter(favItem => favItem.id !== id);
 
         localStorage.setItem("item", JSON.stringify(updatedFavorites));
         setReload(reload + 1);
@@ -67,17 +68,15 @@ export default function Mobile(props: MobileProps) {
                             <div className="flex justify-between items-center mb-3">
                                 <Rating
                                     max={1}
-                                    value={favorites.includes(item.id) ? 1 : 0}
-                                    onChange={() => {
-                                    favorites.includes(item.id)
-                                        ? handleRemoveFavorite(item.id)
-                                        : handleSetFavorite(item.id)
-                                    }}
+                                    value={favorites.some(fav => fav.id === item.id) ? 1 : 0}
+                                    onChange={() =>
+                                        favorites.some(fav => fav.id === item.id)
+                                            ? handleRemoveFavorite(item.id)
+                                            : handleSetFavorite(item)
+                                    }
                                     sx={{
-                                        fontSize: 24,
-                                        "& .MuiRating-iconEmpty": {
-                                            color: "var(--text2)"
-                                        }
+                                        fontSize: 22,
+                                        "& .MuiRating-iconEmpty": { color: "var(--text2)" },
                                     }}
                                 />
                                 <span className="text-sm text-[var(--text2)]">ID: {item.id}</span>
@@ -91,16 +90,16 @@ export default function Mobile(props: MobileProps) {
                                 <p className="text-sm text-[var(--text2)]">{item.origin}</p>
                             </div>
 
-                            <Button
-                                size="small"
-                                variant="contained"
-                                component={Link}
-                                href={`/pet/${item.id}`}
-                                className="btn-style w-full flex items-center justify-center gap-2 text-[var(--text)]"
-                            >
-                                <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
-                                <span>View More</span>
-                            </Button>
+                            <Link href={`/pet/${item.id}`}>
+                                <Button
+                                    size="small"
+                                    variant="contained"
+                                    className="btn-style w-full flex items-center justify-center gap-2 text-[var(--text)]"
+                                >
+                                    <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
+                                    <span>View More</span>
+                                </Button>
+                            </Link>
                         </div>
                     )))
                     : ( <div className="col-span-full text-center text-[var(--text2)] py-6">

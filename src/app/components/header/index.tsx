@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export function Header() {
     return (
-        <header className="flex flex-col md:flex-row items-center justify-between w-full px-6 py-4 md:py-3 bg-gradient-to-r from-[var(--panel)] to-[#1c293b] shadow-md backdrop-blur-md">
+        <header className="flex flex-col md:flex-row items-center justify-between w-full px-6 py-4 md:py-3 bg-gradient-to-r from-[var(--panel)] to-[var(--background)] shadow-md backdrop-blur-md">
             <h1 className="text-[20px] md:text-[24px] font-extrabold flex items-center gap-3 md:gap-4 transition-all">
                 <Link
                     href="/"
