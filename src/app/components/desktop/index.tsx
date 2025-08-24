@@ -7,8 +7,11 @@ import PublicIcon from '@mui/icons-material/Public';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import StarRateIcon from '@mui/icons-material/StarRate';
 
+// Components
+import { CatItem } from '../type/type';
+
 type DesktopProps = {
-    favorites: string[];
+    favorites: CatItem[];
     reload: number;
     apiDataCat: any;
     tableLoader: boolean
@@ -24,30 +27,24 @@ export default function Desktop(props: DesktopProps) {
         setReload
     } = props;
 
-    const handleSetFavorite = (id: string) => {
+    const handleSetFavorite = (item: any) => {
         const stored = localStorage.getItem("item");
-        const favorites: string[] = stored ? JSON.parse(stored) : [];
+        const favorites: any[] = stored ? JSON.parse(stored) : [];
 
-        if (!favorites.includes(id)) {
-            favorites.push(id);
+        const exists = favorites.some(fav => fav.id === item.id);
+        if (!exists) {
+            favorites.push(item);
         }
 
         localStorage.setItem("item", JSON.stringify(favorites));
         setReload(reload + 1);
-    }
+    };
 
     const handleRemoveFavorite = (id: string) => {
         const stored = localStorage.getItem("item");
+        let favorites: any[] = stored ? JSON.parse(stored) : [];
 
-        let favorites: string[] = [];
-
-            try {
-                favorites = stored ? JSON.parse(stored) : [];
-            } catch (err) {
-                favorites = [];
-            }
-
-        const updatedFavorites = favorites.filter(favId => favId !== id);
+        const updatedFavorites = favorites.filter(favItem => favItem.id !== id);
 
         localStorage.setItem("item", JSON.stringify(updatedFavorites));
         setReload(reload + 1);
@@ -101,11 +98,11 @@ export default function Desktop(props: DesktopProps) {
                                 <td className="px-6 py-4 w-[120px]">
                                     <Rating
                                         max={1}
-                                        value={favorites.includes(item.id) ? 1 : 0}
+                                        value={favorites.some(fav => fav.id === item.id) ? 1 : 0}
                                         onChange={() =>
-                                            favorites.includes(item.id)
-                                            ? handleRemoveFavorite(item.id)
-                                            : handleSetFavorite(item.id)
+                                            favorites.some(fav => fav.id === item.id)
+                                                ? handleRemoveFavorite(item.id)
+                                                : handleSetFavorite(item)
                                         }
                                         sx={{
                                             fontSize: 22,
@@ -114,7 +111,7 @@ export default function Desktop(props: DesktopProps) {
                                     />
                                 </td>
 
-                                <td className="px-6 py-4 text-[var(--text3)]">{item.id}</td>
+                                <td className="px-6 py-4 text-[var(--text2)]">{item.id}</td>
 
                                 <td className="px-6 py-4 font-medium text-[var(--text3)] whitespace-nowrap">
                                     {item.name}
@@ -123,15 +120,16 @@ export default function Desktop(props: DesktopProps) {
                                 <td className="px-6 py-4 text-[var(--text2)]">{item.origin}</td>
 
                                 <td className="px-6 py-4 text-center">
-                                    <Button
-                                        size="medium"
-                                        variant="contained"
-                                        className="btn-style shadow-md hover:shadow-lg transition-all flex items-center gap-1 px-2 py-1 text-[var(--text)]"
-                                        href={`/pet/${item.id}`}
-                                    >
-                                        <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
-                                        <span>View More</span>
-                                    </Button>
+                                    <Link href={`/pet/${item.id}`}>
+                                        <Button
+                                            size="medium"
+                                            variant="contained"
+                                            className="btn-style shadow-md hover:shadow-lg transition-all flex items-center gap-1 px-2 py-1 text-[var(--text)]"
+                                        >
+                                            <RemoveRedEyeIcon sx={{ fontSize: 16 }} />
+                                            <span>View More</span>
+                                        </Button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))
