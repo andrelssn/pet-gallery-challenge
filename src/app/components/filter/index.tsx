@@ -30,7 +30,6 @@ export default function Filter(props: FilterProps) {
     const [search, setSearch] = React.useState("");
 
     const handleApply = async () => {
-        setFilter(false);
         setTableLoader(true);
         setSearched(true);
         setPage(1);
