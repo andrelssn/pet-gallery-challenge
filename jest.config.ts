@@ -4,13 +4,7 @@ const config: Config = {
   testEnvironment: "jsdom",
 
   transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": [
-      "ts-jest",
-      {
-        tsconfig: "tsconfig.json",
-        useESM: true,
-      },
-    ],
+    "^.+\\.(ts|tsx|js|jsx)$": "babel-jest",
   },
 
   moduleNameMapper: {
@@ -21,7 +15,7 @@ const config: Config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
 
   transformIgnorePatterns: [
-    "/node_modules/(?!(@mui|lucide-react|nanoid)/)", // transpila libs que usam ESM
+    "/node_modules/(?!(@mui|lucide-react|nanoid)/)",
   ],
 };
 
