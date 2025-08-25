@@ -1,26 +1,59 @@
-# Treinamento e Estudo (Next.js)
-Neste repositório estarei registrando meu treinamento e aulas com o framework Next.js.
+# 🐈 Pet Gallery
+Projeto de galeria de pets, solicitada pela Rede OK.
 
-### O que é o Next?
-É um framework baseado em react, atualmente fullstack, com diversos funcionamentos embutidos dentro do sistema como por exemplo o router
+Uma galeria interativa de raças de gatos, solicitada pelo desafio da **Rede OK**. Explore diversas raças, descubra curiosidades e interaja com filtros e funcionalidades modernas.
 
-### Indice
-- Criação de projetos
+---
 
-- Roteamento e navegação de páginas
+## 📖 Demo
 
-- Metadata (SEO) - Define titulo e description da página ou view atual por meio do metadata, exemplo utilizado no page.tsx home, também define visualização em redes sociais, google, etc.
+Acesse o projeto online: [Pet Gallery](https://pet-gallery-challenge.vercel.app)
 
-- Server x Client Component - Hooks funcionam somente no client component, server component pré renderiza o conteúdo, passando pelo server primeiro.
+---
 
-- Rotas Dinâmicas
+## 🖥️ Funcionalidades
 
-- Actions
+- Listagem de raças de gatos em uma tabela dinâmica.
+- Página de detalhes para cada raça com informações enriquecidas.
+- Paginação para melhor navegação.
+- Sistema de busca por nome.
+- Indicadores de carregamento (loading) e tratamento de erros para experiência mais fluida.
+- Página personalizada para rotas não encontradas (*404 Not Found*).
+- Responsivo para visão em dispositivos móveis e desktop.
+- Sistema de favoritos para destacar suas raças preferidas.
 
-- Revalidate, Cache
+---
 
-- Cache Fetch
+## 🛠️ Tecnologias e Ferramentas Utilizadas
 
-- Middleware
+- **Next.js (App Router)** – estrutura de frontend moderna com rotas dinâmicas.
+- **TypeScript** – tipagem robusta que aumenta a confiabilidade do código.
+- **Tailwind CSS** – estilização eficiente e semântico.
+- **Material UI** – componentes visuais consistentes e elegantes.
+- **Axios** – comunicação simples e eficaz com a API.
+- **Jest** – testes automatizados para garantir qualidade do processo.
+- **TheCatAPI** – fonte das imagens e informações das raças :contentReference[oaicite:0]{index=0}.
 
-- Route Handlers
+---
+
+## 🔀 Rotas
+
+`{url}/`: Página Principal <br/>
+`{url}/pet/:id` Página de detalhes do pet
+
+---
+
+## 🔌 Como Executar Localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/andrelssn/pet-gallery-challenge.git
+
+# Acesse a pasta do projeto
+cd pet-gallery-challenge
+
+# Instale as dependências
+npm install
+
+# Inicie em modo de desenvolvimento
+npm run dev

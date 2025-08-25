@@ -2,15 +2,14 @@
 
 // Dependences
 import React from 'react';
-import Link from 'next/link';
-import { Box, Button, CircularProgress, Divider, IconButton, Pagination, Rating, Skeleton, Typography } from '@mui/material';
+import Image from 'next/image';
+import { Button, CircularProgress, Pagination, Typography } from '@mui/material';
+
+// Logo
+import logo from '../../images/pet.png';
 
 // Icons
-import PetsIcon from '@mui/icons-material/Pets';
-import HelpCenterIcon from '@mui/icons-material/HelpCenter';
-import PublicIcon from '@mui/icons-material/Public';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import StarRateIcon from '@mui/icons-material/StarRate';
+import StarIcon from '@mui/icons-material/Star';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 
@@ -18,11 +17,17 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import { callApi } from '../../services/api';
 
 // Components
+import { checkMobile } from '../checkMobile';
+import { CatItem } from '../type/type';
 import Filter from '../filter';
+import Desktop from '../desktop';
+import Mobile from '../mobile';
+import Link from 'next/link';
 
 export default function Table() {
+    const isMobile                      = checkMobile();
     const [filter, setFilter]           = React.useState<boolean>(false);
-    const [favorites, setFavorites]     = React.useState<string[]>([]);
+    const [favorites, setFavorites]     = React.useState<CatItem[]>([]);
     const [apiDataCat, setApiDataCat]   = React.useState<any>(null);
     const [page, setPage]               = React.useState<number>(1);
     const [pageLoader, setPageLoader]   = React.useState<boolean>(true);
@@ -42,9 +47,9 @@ export default function Table() {
     }, [reload]);
 
     if (pageLoader) return (
-        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
-            <div className="flex relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 overflow-auto">
-                <CircularProgress sx={{ m: "auto" }}/>
+        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%] max-w-5xl">
+            <div className="flex flex-col justify-center rounded-2xl mb-6 shadow-md bg-[var(--panel)] border border-[var(--border)] p-5 transition hover:shadow-lg">
+                <CircularProgress sx={{ m: "auto", color: "var(--theme)" }}/>
             </div>
         </div>
     );
@@ -58,170 +63,106 @@ export default function Table() {
         setTableLoader(false);
     };
 
-    const handleSetFavorite = (id: string) => {
-        const stored = localStorage.getItem("item");
-        const favorites: string[] = stored ? JSON.parse(stored) : [];
-
-        if (!favorites.includes(id)) {
-            favorites.push(id);
-        }
-
-        localStorage.setItem("item", JSON.stringify(favorites));
-        setReload(reload + 1);
-    }
-
-    const handleRemoveFavorite = (id: string) => {
-        const stored = localStorage.getItem("item");
-
-        let favorites: string[] = [];
-
-            try {
-                favorites = stored ? JSON.parse(stored) : [];
-            } catch (err) {
-                favorites = [];
-            }
-
-        const updatedFavorites = favorites.filter(favId => favId !== id);
-
-        localStorage.setItem("item", JSON.stringify(updatedFavorites));
-        setReload(reload + 1);
-    };
-
     return (
-        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%]">
-            <div className="flex flex-col justify-center rounded-xl mb-6 shadow-md/30 bg-neutral-100 border border-neutral-300 pl-4 pr-4 pt-2 pb-2">
-                <Typography fontSize={20} color="var(--theme)" fontWeight={"bold"}>
-                    <PetsIcon sx={{ mb: 0.5 }}/> Cat List
-                </Typography>
-
-                <Divider sx={{ m: "7px 0px" }}/>
-
-                <Typography color="#666666ff" fontSize={14}>
-                    Here you can check out all the breeds of cats, to view more details click in the 'View More' button on the list.
-                </Typography>
-            </div>
-
-            <section>
-                <Box className="relative w-[100%] rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto mb-3">
-                    <div className="flex w-[100%] justify-between items-center pl-5 pr-5">
-                        <Typography fontSize={16} color="var(--theme)" fontWeight={"bold"}>
-                            Filter
-                        </Typography>
-
-                        <IconButton onClick={() => setFilter(!filter)} sx={{ color: 'var(--theme)' }}>
-                            { filter ? <FilterAltOffIcon/> : <FilterAltIcon/> }
-                        </IconButton>
-                    </div>
-
-                    <Filter
-                        filter={filter}
-                        setPage={setPage}
-                        setFilter={setFilter}
-                        setSearched={setSearched}
-                        setApiDataCat={setApiDataCat}
-                        setPageLoader={setPageLoader}
-                        setTableLoader={setTableLoader}
-                    />
-                </Box>
-
-                <div className="relative w-[100%] min-h-150 justify-self-center rounded-xl shadow-md/30 bg-neutral-100 border border-neutral-300 overflow-auto pl-5 pr-5">
-                    { tableLoader
-                        ? <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: "20px 0px" }}>
-                            <Skeleton animation="wave" sx={{ width: "100%", height: "100px" }}/>
-                            <Skeleton variant="rectangular" animation="wave" sx={{ width: "100%", height: "200px" }}/>
-                            <Skeleton variant="rectangular" animation="wave" sx={{ width: "100%", height: "100px", mt: 1 }}/>
-                            <Skeleton variant="rectangular" animation="wave" sx={{ width: "100%", height: "100px", mt: 1 }}/>
-                        </Box>
-                        : <table className="w-full text-sm text-left rtl:text-right text-gray-500 rounded-xl">
-                            <thead className="text-xs text-gray-600 uppercase">
-                                <tr>
-                                    <th scope="col" className="px-2 py-3">
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <StarRateIcon sx={{ fontSize: 14, mr: 0.4 }}/>
-                                            <span>Favorite</span>
-                                        </div>
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        ID
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <HelpCenterIcon sx={{ fontSize: 14, mr: 0.4  }}/>
-                                            <span>Breed</span>
-                                        </div>
-                                    </th>
-                                    <th scope="col" className="px-6 py-3">
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            <PublicIcon sx={{ fontSize: 14, mr: 0.4  }}/>
-                                            <span>Origin</span>
-                                        </div>
-                                    </th>
-                                    <th scope="col" className="px-6 py-3 text-center">
-                                        Action
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { apiDataCat?.length > 0 ? apiDataCat.map((item: any) => {
-                                    return (
-                                        <tr key={item.id} className="border-b border-gray-300 hover:bg-gray-200">
-                                            <td key={reload} className="px-6 py-4 w-[120px]">
-                                                <Rating
-                                                    max={1}
-                                                    value={favorites.includes(item.id) ? 1 : 0}
-                                                    onChange={(event) => {
-                                                        favorites.includes(item.id)
-                                                        ? handleRemoveFavorite(item.id)
-                                                        : handleSetFavorite(item.id)
-                                                    }}
-                                                    sx={{ fontSize: 30 }}
-                                                />
-                                            </td>
-
-                                            <td className="px-6 py-4">
-                                                { item.id }
-                                            </td>
-                                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                { item.name }
-                                            </th>
-                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                { item.origin }
-                                            </td>
-
-                                            <td className="px-6 py-4 text-center">
-                                                <Button size="small" variant="contained" className='blue-bg'>
-                                                    <Link href={`/pet/${item.id}`} className="flex items-center px-2 py-1 whitespace-nowrap items-center">
-                                                        <RemoveRedEyeIcon sx={{ fontSize: 16, mr: 1 }}/>
-                                                        <span>View More</span>
-                                                    </Link>
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                                :  <tr>
-                                        <td
-                                            colSpan={999}
-                                            className="px-4 py-6 text-center bg-red-50 text-red-700 border border-red-200"
-                                        >
-                                            No Results.
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
+        <div className="flex flex-col justify-self-center mt-6 mb-10 w-[90%] max-w-5xl">
+            <div className="flex flex-col justify-center rounded-2xl mb-6 shadow-md bg-[var(--panel)] border border-[var(--border)] p-5 transition hover:shadow-lg">
+                <div className="items-center gap-2 text-xl">
+                    <Typography textAlign={"center"} fontWeight={"bold"} fontSize={28}>
+                        <Image alt="pet-gallery" src={logo} width={50} style={{ margin: "auto" }}/>
+                        <span className='text-glow'>Explore the World of Cats</span>
+                    </Typography>
                 </div>
 
-                <Box className="w-[340px] p-2 flex justify-self-center justify-center shadow-md/30 bg-neutral-100 rounded-xl mt-5  mb-5">
-                    <Pagination
-                        disabled={ searched }
-                        count={6}
-                        page={page}
-                        color="primary"
-                        onChange={handleChangePage}
-                    />
-                </Box>
+                <div className="h-[1px] bg-[var(--theme)] opacity-50 my-3" />
+
+                <p className="text-[var(--text2)] text-sm leading-relaxed text-center">
+                    Discover all cat breeds and learn about their characteristics and curiosities.<br/>
+                    Click <span className="text-[var(--theme)] font-semibold"> "View More"</span> for complete details on each breed.
+                </p>
+            </div>
+
+            <section className="space-y-5">
+                <div className="w-full rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] overflow-hidden">
+                    <div className="flex justify-between items-center px-5 py-3 bg-[var(--background)]/50 border-b border-[var(--border)]">
+                        <h2 className="text-[var(--theme)] font-bold text-base">Filter</h2>
+
+                        <div className='flex items-center gap-3'>
+                            <Link href='/favorites'>
+                                <Button size='small' className='favorites-btn' startIcon={<StarIcon/>}>
+                                    My Favorites
+                                </Button>
+                            </Link>
+
+                            <button
+                                onClick={() => setFilter(!filter)}
+                                className="p-2 rounded-lg hover:bg-[var(--theme)]/10 transition"
+                            >
+                                {filter ? (
+                                    <FilterAltOffIcon className="text-[var(--theme)]" />
+                                ) : (
+                                    <FilterAltIcon className="text-[var(--theme)]" />
+                                )}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="p-4">
+                        <Filter
+                            filter={filter}
+                            setPage={setPage}
+                            setFilter={setFilter}
+                            setSearched={setSearched}
+                            setApiDataCat={setApiDataCat}
+                            setPageLoader={setPageLoader}
+                            setTableLoader={setTableLoader}
+                        />
+                    </div>
+                </div>
+
+                <div className="w-full min-h-150 rounded-2xl shadow-md bg-[var(--panel)] border border-[var(--border)] p-5">
+                    {isMobile ? (
+                        <Mobile
+                            apiDataCat={apiDataCat}
+                            reload={reload}
+                            favorites={favorites}
+                            tableLoader={tableLoader}
+                            setReload={setReload}
+                        />
+                    ) : (
+                        <Desktop
+                            apiDataCat={apiDataCat}
+                            reload={reload}
+                            favorites={favorites}
+                            tableLoader={tableLoader}
+                            setReload={setReload}
+                        />
+                    )}
+                </div>
+
+                {!searched && (
+                    <div className="flex justify-center">
+                        <div className="rounded-2xl shadow-md bg-[var(--panel)] px-4 py-2">
+                            <Pagination
+                                count={6}
+                                page={page}
+                                onChange={handleChangePage}
+                                sx={{
+                                    "& .MuiPaginationItem-root": {
+                                        color: "var(--text3)",
+                                    },
+                                    "& .Mui-selected": {
+                                        backgroundColor: "var(--theme) !important",
+                                        color: "var(--text)",
+                                        borderRadius: "8px",
+                                    },
+                                    "& .MuiPaginationItem-root:hover": {
+                                        backgroundColor: "rgba(255,255,255,0.2)",
+                                    },
+                                }}
+                            />
+                        </div>
+                    </div>
+                )}
             </section>
         </div>
     )
