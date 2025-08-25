@@ -1,7 +1,7 @@
 # 🐈 Pet Gallery
-Projeto de galeria de pets, solicitada pela Rede OK e Deland.
+Projeto de galeria de pets, solicitada pela Rede OK e Delend.
 
-Uma galeria interativa de raças de gatos, solicitada pelo desafio da **Rede OK e Deland**. Explore diversas raças, descubra curiosidades e interaja com filtros e funcionalidades modernas.
+Uma galeria interativa de raças de gatos, solicitada pelo desafio da **Rede OK e Delend**. Explore diversas raças, descubra curiosidades e interaja com filtros e funcionalidades modernas.
 
 ---
 
